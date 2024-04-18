@@ -20,18 +20,14 @@ $yoan = Database::getPokemonAdmin();
     <h1 class="text-logo"><span class="bi-shop"></span> Pokedex <span class="bi-shop"></span></h1>
     <div class="container admin">
         <div class="row">
-            <h1><strong>Pokemons</strong></h1>
+            <h1><strong>Equipe</strong></h1>
             <table id="tableauPokemons" class="table table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Accès fiches</th>
+                        <th>Image</th>
                         <th onClick="trierTableau(1)">Nom</th>
-                        <th onClick="trierTableau(2)">Type</th>
-                        <th onClick="trierTableau(3)">Compétence</th>
+                        <th onClick="trierTableau(2)">Description</th>
                         <th onClick="trierTableau(4)">Taille</th>
-                        <th onClick="trierTableau(5)">Poids</th>
-                        <th onClick="trierTableau(6)">Attaque</th>
-                        <th onClick="trierTableau(7)">Défense</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,11 +37,7 @@ $yoan = Database::getPokemonAdmin();
                         echo '<td><a href= "../admin/view.php?id='. $item['num_poke'].'"<img src="../images/' . $item['img_poke'] . '"> /a></td>';
                         echo '<td>' . $item['nom'] . '</td>';
                         echo '<td>' . $item['type'] . '</td>';
-                        echo '<td>' . $item['competence'] . '</td>';
                         echo '<td>' . $item['taille'] . '</td>';
-                        echo '<td>' . $item['masse'] . '</td>';
-                        echo '<td>' . $item['attack'] . '</td>';
-                        echo '<td>' . $item['defence'] . '</td>';
                         echo '</tr>';
                     }
                     ?>

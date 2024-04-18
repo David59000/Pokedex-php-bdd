@@ -1,30 +1,24 @@
-function triTableau (fTriTableau) {
-var tabResult = document.getElementById ("tableauPokemons");
-var classement = "asc";
-var ligne = tabResult.rows ;
-var typeClassement = true ;
+var classement = "asc"; // Variable pour stocker l'état du classement
+function trierTableau(colonne) {
+    var tabResult = document.getElementById("tableauPokemons");
+    var lignes = Array.from(tabResult.rows).slice(1); // Convertir les lignes en tableau JavaScript et exclure la ligne d'en-tête
 
-//console.log(ligne);
-while (typeClassement = true){
-    typeClassement = false ;
-    for (var i = 1 ; i<ligne.lenght-1;i=i+1){
-        var x = ligne[i].getElementByTagName("td")[fTriTableau];
-        var z = ligne[i+1].getElementByTagName("td")[fTriTableau];
+    lignes.sort(function(a, b) {
+        var x = a.cells[colonne].textContent.toLowerCase();
+        var y = b.cells[colonne].textContent.toLowerCase();
 
-        console.log(x);
-        console.log(z);
-
-        if ((classement==="asc")||(classement==="desc")){
-            ligne[i].parentNode.insertBefore(ligne[i+1],ligne[i]);
-            typeClassement=true;
-            break;
+        if (classement === "asc") {
+            return x.localeCompare(y); // Tri ascendant
+        } else {
+            return y.localeCompare(x); // Tri descendant
         }
-    }
-    if (typeClassement=true){
-        classement=(classement==="asc")? "desc":"asc";
-    }
+    });
+
+    // Reconnecter les lignes triées au tableau HTML
+    lignes.forEach(function(ligne) {
+        tabResult.appendChild(ligne);
+    });
+
+    // Inverser le classement pour le prochain clic
+    classement = (classement === "asc") ? "desc" : "asc";
 }
-// console.log(tabResult);
-// var fTriTableau = triTableau.sort();
-};
-// console.log("bonjour");

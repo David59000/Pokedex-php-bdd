@@ -1,12 +1,43 @@
 <?php
 
-$img_poke = $_GET['img_poke'];
+$num_poke = $_GET['id'];
 
 require 'database.php';
-$theo = Database::getPokemonById($_GET['img_poke']);
+$theo = Database::getPokemonById($num_poke);
 
 
-echo  <img src="images/' . $pokemon['img_poke'] . '" class="img-fluid" alt="...">
+echo  '<img src="images/' . $theo['img_poke'] . '" class="img-fluid" alt="...">';
+
+// var_dump($theo);
+
+$num_equipe_poke = $_GET['id'];
+// require 'database.php';
+// $theo = Database::getPokemonById($num_equipe_poke);
+
+
+  // Connexion à la base de données
+  $dsn = 'mysql:dbname=pokedex;host=127.0.0.1';
+  $user = 'root';
+  $password = '';
+
+  try {
+      $dbh = new PDO($dsn, $user, $password);
+      // Préparation de la requête d'insertion
+      $sql = "INSERT INTO equipes (poke_id, idDresseur) VALUES (?, 1)";
+      $requete = $dbh->prepare($sql);
+
+      // Exécution de la requête avec les valeurs du formulaire
+      $requete->execute(array($num_equipe_poke));
+
+      // Fermeture de la connexion
+      $dbh = null;
+
+      echo "Inscription réussie.";
+  } catch (PDOException $e) {
+      echo "Erreur : " . $e->getMessage();
+  }
+?>
+
 
 
 ?>
@@ -34,31 +65,35 @@ echo  <img src="images/' . $pokemon['img_poke'] . '" class="img-fluid" alt="..."
             <br>
             <form>
               <div>
-                <label>Nom:</label><?php echo '  '.$theo['name'];?>
+                <label>Image:</label><?php echo '  '.$theo['img_poke'];?>
               </div>
               <br>
               <div>
                 <label>Description:</label><?php echo '  '.$theo['description'];?>
               </div>
               <br>
-              <div>
+              <!-- <div>
                 <label>Prix:</label><?php echo '  '.number_format((float)$theo['price'], 2, '.', ''). ' €';?>
+              </div> -->
+              <br>
+              <div>
+                <label>Nom du pokemon:</label><?php echo '  '.$theo['nom'];?>
               </div>
               <br>
               <div>
-                <label>Catégorie:</label><?php echo '  '.$theo['CatName'];?>
-              </div>
-              <br>
-              <div>
-                <label>Image:</label><?php echo '  '.$theo['image'];?>
+                <label>Taille:</label><?php echo '  '.$theo['taille'];?>
               </div>
             </form>
             <br>
             <div class="form-actions">
               <a class="btn btn-primary" href="index.php"><span class="bi-arrow-left"></span> Retour</a>
             </div>
+            <br>
+            <div class="form-actions">
+              <a class="btn btn-primary" href="equipe.php"><span class="bi-arrow-left"></span> Ajouter dans mon équipe</a>
+            </div>
           </div>
-          <div class="col-md-6 site">
+          <!-- <div class="col-md-6 site">
             <div class="img-thumbnail">
               <img src="<?php echo '../images/'.$theo['image'];?>" alt="...">
               <div class="price"><?php echo number_format((float)$theo['price'], 2, '.', ''). ' €';?></div>
@@ -68,7 +103,7 @@ echo  <img src="images/' . $pokemon['img_poke'] . '" class="img-fluid" alt="..."
                 <a href="#" class="btn btn-order" role="button"><span class="bi-cart-fill"></span> Commander</a>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>   
     </body>

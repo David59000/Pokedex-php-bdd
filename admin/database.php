@@ -22,13 +22,15 @@ class Database {
     }
 
 
-    public static function getPokemonById(){
+    public static function getPokemonById($num_poke){
         $db = Database::connect();
-        $rida = $db->prepare ("SELECT p.img_poke FROM pokemon AS p");
-        $rida->execute(array($img_poke));
+        $rida = $db->prepare ("SELECT * FROM pokemon AS p WHERE num_poke = :id");
+        $rida->execute(array('id'=> $num_poke));
         $clavier = $rida->fetch();
         return $clavier;
     }
+
+ 
 
     
 
