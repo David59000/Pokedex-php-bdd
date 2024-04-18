@@ -14,7 +14,7 @@ $num_equipe_poke = $_GET['id'];
 // require 'database.php';
 // $theo = Database::getPokemonById($num_equipe_poke);
 
-
+if (isset($_POST['num_poke'])){
   // Connexion à la base de données
   $dsn = 'mysql:dbname=pokedex;host=127.0.0.1';
   $user = 'root';
@@ -32,10 +32,11 @@ $num_equipe_poke = $_GET['id'];
       // Fermeture de la connexion
       $dbh = null;
 
-      echo "Inscription réussie.";
+      echo "Ce pokemon a bien été ajouté dans la table EQUIPE de la base de données";
   } catch (PDOException $e) {
       echo "Erreur : " . $e->getMessage();
   }
+}
 ?>
 
 
@@ -63,7 +64,7 @@ $num_equipe_poke = $_GET['id'];
           <div class="col-md-6">
             <h1><strong>Voir un Pokemon</strong></h1>
             <br>
-            <form>
+            <form action="" method="POST">
               <div>
                 <label>Image:</label><?php echo '  '.$theo['img_poke'];?>
               </div>
@@ -82,17 +83,21 @@ $num_equipe_poke = $_GET['id'];
               <br>
               <div>
                 <label>Taille:</label><?php echo '  '.$theo['taille'];?>
+                <input type="hidden" name="num_poke" value= "<?php.$num_equipe_poke.?>">
               </div>
-            </form>
+
+              
+            
             <br>
             <div class="form-actions">
               <a class="btn btn-primary" href="index.php"><span class="bi-arrow-left"></span> Retour</a>
             </div>
             <br>
             <div class="form-actions">
-              <a class="btn btn-primary" href="equipe.php"><span class="bi-arrow-left"></span> Ajouter dans mon équipe</a>
+            <button class="btn btn-primary" type="submit" value="ajouter">Ajouter ce pokemon
             </div>
           </div>
+          </form>
           <!-- <div class="col-md-6 site">
             <div class="img-thumbnail">
               <img src="<?php echo '../images/'.$theo['image'];?>" alt="...">
