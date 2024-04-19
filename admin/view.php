@@ -27,12 +27,36 @@ if (isset($_POST['num_poke'])){
       $requete = $dbh->prepare($sql);
 
       // Exécution de la requête avec les valeurs du formulaire
-      $requete->execute(array($num_equipe_poke));
+      $requete->execute(array($_POST['num_poke']));
 
       // Fermeture de la connexion
       $dbh = null;
 
       echo "Ce pokemon a bien été ajouté dans la table EQUIPE de la base de données";
+  } catch (PDOException $e) {
+      echo "Erreur : " . $e->getMessage();
+  }
+}
+
+if (isset($_POST['delete_poke'])){
+  // Connexion à la base de données
+  $dsn = 'mysql:dbname=pokedex;host=127.0.0.1';
+  $user = 'root';
+  $password = '';
+
+  try {
+      $dbh = new PDO($dsn, $user, $password);
+      // Préparation de la requête d'insertion
+      $sql = "DELETE FROM equipes WHERE poke_id = ?";
+      $requete = $dbh->prepare($sql);
+
+      // Exécution de la requête avec les valeurs du formulaire
+      $requete->execute(array($_POST['delete_poke']));
+
+      // Fermeture de la connexion
+      $dbh = null;
+
+      echo "Ce pokemon a bien été supprimé dans la table EQUIPE de la base de données";
   } catch (PDOException $e) {
       echo "Erreur : " . $e->getMessage();
   }
@@ -84,6 +108,7 @@ if (isset($_POST['num_poke'])){
               <div>
                 <label>Taille:</label><?php echo '  '.$theo['taille'];?>
                 <input type="hidden" name="num_poke" value= "<?php.$num_equipe_poke.?>">
+                <input type="hidden" name="delete_poke" value= "<?php.$num_equipe_poke.?>">
               </div>
 
               
@@ -95,6 +120,10 @@ if (isset($_POST['num_poke'])){
             <br>
             <div class="form-actions">
             <button class="btn btn-primary" type="submit" value="ajouter">Ajouter ce pokemon
+            </div>
+            <br>
+            <div class="form-actions">
+            <button class="btn btn-danger" type="submit" value="supprimer">Supprimer ce pokemon
             </div>
           </div>
           </form>

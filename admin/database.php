@@ -53,8 +53,19 @@ public Static function getPokemonAdmin(){
     JOIN pokemon_type ON p.num_poke = pokemon_type.poke_id
     JOIN type ON pokemon_type.type_id = type.id_type");
     
-
     return $rechercheType;
+}
+
+public Static function getPokemonEquipe (){
+    $db = Database::connect();
+    $rechercheTypeForDelete = $db->query("SELECT p.nom as nom_pokemon, p.num_poke, d.nom as dresseur, t.nom as type FROM equipes AS e
+    JOIN dresseurs as d ON e.idDresseur = d.idDresseur
+    join pokemon as p on e.poke_id = p.num_poke
+    join pokemon_type as pt on p.num_poke = pt.poke_id
+    join type as t on pt.type_id = t.id_type;
+    ");
+
+    return $rechercheTypeForDelete;
 }
 
 
